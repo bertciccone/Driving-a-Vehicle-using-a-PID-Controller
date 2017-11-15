@@ -1,98 +1,73 @@
-# CarND-Controls-PID
-Self-Driving Car Engineer Nanodegree Program
+# CarND-PID-Control-Project
+
+** PID Control Project **
+
+In this project, I implement a PID controller in C++ to steer a car around a track in a simulator.
+
+The goals / steps of this project are the following:
+
+* Initialize the PID control coefficients in the PID object
+* Implement the PID control algorithm to compute steering values
+* Use the PID control algorithm to drive the car in the Udacity/Unity simulator
+* Fine-tune the PID control coefficients until the car successfully drives around the track
+
+## [Rubric](https://review.udacity.com/#!/rubrics/824/view) Points
+
+### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
 
 ---
 
-## Dependencies
+### Describe the effect each of the P, I, D components had in your implementation.
 
-* cmake >= 3.5
- * All OSes: [click here for installation instructions](https://cmake.org/install/)
-* make >= 4.1(mac, linux), 3.81(Windows)
-  * Linux: make is installed by default on most Linux distros
-  * Mac: [install Xcode command line tools to get make](https://developer.apple.com/xcode/features/)
-  * Windows: [Click here for installation instructions](http://gnuwin32.sourceforge.net/packages/make.htm)
-* gcc/g++ >= 5.4
-  * Linux: gcc / g++ is installed by default on most Linux distros
-  * Mac: same deal as make - [install Xcode command line tools]((https://developer.apple.com/xcode/features/)
-  * Windows: recommend using [MinGW](http://www.mingw.org/)
-* [uWebSockets](https://github.com/uWebSockets/uWebSockets)
-  * Run either `./install-mac.sh` or `./install-ubuntu.sh`.
-  * If you install from source, checkout to commit `e94b6e1`, i.e.
-    ```
-    git clone https://github.com/uWebSockets/uWebSockets 
-    cd uWebSockets
-    git checkout e94b6e1
-    ```
-    Some function signatures have changed in v0.14.x. See [this PR](https://github.com/udacity/CarND-MPC-Project/pull/3) for more details.
-* Simulator. You can download these from the [project intro page](https://github.com/udacity/self-driving-car-sim/releases) in the classroom.
+#### 1. Student describes the effect of the P, I, D component of the PID algorithm in their implementation. Is it what you expected?
 
-There's an experimental patch for windows in this [PR](https://github.com/udacity/CarND-PID-Control-Project/pull/3)
+The PID error components are:
 
-## Basic Build Instructions
+p_error: the proportional component, or the distance between the expected position of the car and the actual position of the car in the lane.
 
-1. Clone this repo.
-2. Make a build directory: `mkdir build && cd build`
-3. Compile: `cmake .. && make`
-4. Run it: `./pid`. 
+i_error: the integral component, or the error accumulation over time that indicates a bias which makes the car tend to drive either right or left of the desired position in the lane.
 
-Tips for setting up your environment can be found [here](https://classroom.udacity.com/nanodegrees/nd013/parts/40f38239-66b6-46ec-ae68-03afd8a601c8/modules/0949fca6-b379-42af-a919-ee50aa304e6a/lessons/f758c44c-5e40-4e01-93b5-1a82aa4e044f/concepts/23d376c7-0195-4276-bdf0-e02f1f3c665d)
+d_error: the derivative component, or the rate of change of the error which is related to the changing curvature of the lane.
 
-## Editor Settings
+Each of these error components are multiplied by a coefficient which determines how significant the component is in the overall error calculation.
 
-We've purposefully kept editor configuration files out of this repo in order to
-keep it as simple and environment agnostic as possible. However, we recommend
-using the following settings:
+The coefficients (hyperparameters) are:
 
-* indent using spaces
-* set tab width to 2 spaces (keeps the matrices in source code aligned)
+Kp: coefficient for the proportional error component
+Ki: coefficient for the integral error component
+Kd: coefficient for the derivative error component
 
-## Code Style
 
-Please (do your best to) stick to [Google's C++ style guide](https://google.github.io/styleguide/cppguide.html).
+### Describe how the final hyperparameters were chosen.
 
-## Project Instructions and Rubric
+#### Student discusses how they chose the final hyperparameters (P, I, D coefficients). This could be have been done through manual tuning, twiddle, SGD, or something else, or a combination!
 
-Note: regardless of the changes you make, your project must be buildable using
-cmake and make!
+After using initial values of -0.5, 0, -0.5 for the Kp, Ki and Kd coefficients, I started by experimenting with different values to see if I could find a relationship between the Kp and Kd values. (I assumed that the car had no bias in the simulator and so left the Ki coefficient zero throughout.)
 
-More information is only accessible by people who are already enrolled in Term 2
-of CarND. If you are enrolled, see [the project page](https://classroom.udacity.com/nanodegrees/nd013/parts/40f38239-66b6-46ec-ae68-03afd8a601c8/modules/f1820894-8322-4bb3-81aa-b26b3c6dcbaf/lessons/e8235395-22dd-4b87-88e0-d108c5e5bbf4/concepts/6a4d8d42-6a04-4aa6-b284-1697c0fd6562)
-for instructions and the project rubric.
+I tried using a larger value for Kd than Kp and the car began to oscillate left and right and left the track. Reversing the relationship and using a larger value for Kp than Kd I notices a more stable path for the car.
 
-## Hints!
+I then realized that the Kp value has a higher significance when the car is driving on the straight portions of the track, and through constant curves, and the Kd value has a higher significance when transitioning between straights and curves, and when curves are not constant.
 
-* You don't have to follow this directory structure, but if you do, your work
-  will span all of the .cpp files here. Keep an eye out for TODOs.
+This implies:
 
-## Call for IDE Profiles Pull Requests
+- the Kp value has to be relatively small to prevent overcorrection on straights and constant curves
+- the Kd value has to be relatively much larger in order to correct the steering of the car when the lane curvature changes rapidly
 
-Help your fellow students!
+### The vehicle must successfully drive a lap around the track.
 
-We decided to create Makefiles with cmake to keep this project as platform
-agnostic as possible. Similarly, we omitted IDE profiles in order to we ensure
-that students don't feel pressured to use one IDE or another.
+#### No tire may leave the drivable portion of the track surface. The car may not pop up onto ledges or roll over any surfaces that would otherwise be considered unsafe (if humans were in the vehicle).
 
-However! I'd love to help people get up and running with their IDEs of choice.
-If you've created a profile for an IDE that you think other students would
-appreciate, we'd love to have you add the requisite profile files and
-instructions to ide_profiles/. For example if you wanted to add a VS Code
-profile, you'd add:
+With this insight, I tried the following values and found the combination (Kp: -0.15, Ki: 0, Kd: -2.0) obtained the best result, keeping the car on the track and reaching a top speed of 35 mph.
 
-* /ide_profiles/vscode/.vscode
-* /ide_profiles/vscode/README.md
-
-The README should explain what the profile does, how to take advantage of it,
-and how to install it.
-
-Frankly, I've never been involved in a project with multiple IDE profiles
-before. I believe the best way to handle this would be to keep them out of the
-repo root to avoid clutter. My expectation is that most profiles will include
-instructions to copy files to a new location to get picked up by the IDE, but
-that's just a guess.
-
-One last note here: regardless of the IDE used, every submitted project must
-still be compilable with cmake and make./
-
-## How to write a README
-A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
-
+-0.1 0 -1.0
+-0.1 0 -1.1
+-0.1 0 -1.2
+-0.1 0 -1.4
+-0.1 0 -1.8
+-0.1 0 -2.0
+-0.15 0 -2.0
+-0.15 0 -2.0 Top speed of 35 mph
+-0.2 0 -2.0
+-0.25 0 -2.5
+-0.2 0 -2.5
+-0.2 0 -2.3
