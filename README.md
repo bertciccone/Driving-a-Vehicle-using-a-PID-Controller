@@ -1,6 +1,6 @@
 # CarND-PID-Control-Project
 
-** PID Control Project **
+**PID Control Project**
 
 In this project, I implement a PID controller in C++ to steer a car around a track in a simulator.
 
@@ -59,15 +59,18 @@ This implies:
 
 With this insight, I tried the following values and found the combination (Kp: -0.15, Ki: 0, Kd: -2.0) obtained the best result, keeping the car on the track and reaching a top speed of 35 mph.
 
--0.1 0 -1.0
--0.1 0 -1.1
--0.1 0 -1.2
--0.1 0 -1.4
--0.1 0 -1.8
--0.1 0 -2.0
--0.15 0 -2.0
--0.15 0 -2.0 Top speed of 35 mph
--0.2 0 -2.0
--0.25 0 -2.5
--0.2 0 -2.5
--0.2 0 -2.3
+- -0.1 0 -1.0
+- -0.1 0 -1.1
+- -0.1 0 -1.2
+- -0.1 0 -1.4
+- -0.1 0 -1.8
+- -0.1 0 -2.0
+- -0.15 0 -2.0
+- -0.15 0 -2.0 Top speed of 35 mph
+- -0.2 0 -2.0
+- -0.25 0 -2.5
+- -0.2 0 -2.5
+- -0.2 0 -2.3
+
+
+![Test Image][./output_images/test_images_distortion_corrected.jpg]
