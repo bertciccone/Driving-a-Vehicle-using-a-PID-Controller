@@ -74,12 +74,12 @@ With this insight, I tried the following values and found the combination (Kp: -
 
 #### Initial coefficients (Kp: -0.5, Ki: 0, Kd: -0.5)
 
-![Initial Image][./img/Initial.jpg]
+![Initial Image](./img/Initial.jpg)
 
 #### Better coefficients (Kp: -0.1, Ki: 0, Kd: -1.0)
 
-![Better Image][./img/Better.jpg]
+![Better Image](./img/Better.jpg)
 
 #### Final coefficients (Kp: -0.15, Ki: 0, Kd: -2.0)
 
-![Final Image][./img/Final.jpg]
+![Final Image](./img/Final.jpg)
