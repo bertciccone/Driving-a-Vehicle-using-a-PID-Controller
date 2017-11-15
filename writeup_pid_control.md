@@ -72,5 +72,14 @@ With this insight, I tried the following values and found the combination (Kp: -
 - -0.2 0 -2.5
 - -0.2 0 -2.3
 
+#### Initial coefficients (Kp: -0.5, Ki: 0, Kd: -0.5)
 
-![Test Image][./output_images/test_images_distortion_corrected.jpg]
+![Initial Image][./img/Initial.jpg]
+
+#### Better coefficients (Kp: -0.1, Ki: 0, Kd: -1.0)
+
+![Better Image][./img/Better.jpg]
+
+#### Final coefficients (Kp: -0.15, Ki: 0, Kd: -2.0)
+
+![Final Image][./img/Final.jpg]
