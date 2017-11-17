@@ -32,7 +32,20 @@ int main(int argc, char *argv[]) {
 
   PID pid;
   // TODO: Initialize the pid variable.
-  pid.Init(atof(argv[1]), atof(argv[2]), atof(argv[3]));
+  double argKp = 0;
+  double argKi = 0;
+  double argKd = 0;
+  if (argc == 1) {
+    argKp = -0.15;
+    argKi = 0.0;
+    argKd = -2.0;
+  } else {
+    argKp = atof(argv[1]);
+    argKi = atof(argv[2]);
+    argKd = atof(argv[3]);
+  }
+
+  pid.Init(argKp, argKi, argKd);
 
   h.onMessage([&pid](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length,
                      uWS::OpCode opCode) {

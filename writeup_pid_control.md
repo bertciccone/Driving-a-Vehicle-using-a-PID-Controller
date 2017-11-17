@@ -11,6 +11,14 @@ The goals / steps of this project are the following:
 * Use the PID control algorithm to drive the car in the Udacity/Unity simulator
 * Fine-tune the PID control coefficients until the car successfully drives around the track
 
+#### How to run
+
+1. Clone the project at https://github.com/bertcuda/CarND-PID-Control-Project.git
+
+2. cd <project directory>/CarND-PID-Control-Project/build
+
+3. ./pid
+
 ## [Rubric](https://review.udacity.com/#!/rubrics/824/view) Points
 
 ### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
