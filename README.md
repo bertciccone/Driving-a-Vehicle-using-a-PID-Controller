@@ -13,7 +13,7 @@ The goals / steps of this project are the following:
 
 #### How to run
 
-1. Clone the project at https://github.com/bertcuda/CarND-PID-Control-Project.git
+1. Clone the project at https://github.com/bertciccone/CarND-PID-Control-Project.git
 
 2. cd <project directory>/CarND-PID-Control-Project/build
 
